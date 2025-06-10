@@ -1,6 +1,6 @@
 from django.db import models
 
-from profissionais.models import Profissional
+from backend.profissionais.models import Profissional
 
 class Consulta(models.Model):
     profissional = models.ForeignKey(Profissional, on_delete=models.CASCADE)
