@@ -1,3 +1,10 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Profissional
+from .serializers import ProfissionalSerializer
+
+class ProfissionalViewSet(viewsets.ModelViewSet):
+    queryset = Profissional.objects.all()
+    serializer_class = ProfissionalSerializer
+
