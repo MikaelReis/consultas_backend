@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'backend.setup.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lacrei_db',
-        'USER': 'mikael',
-        'PASSWORD': 'chat',
-        'HOST': 'db',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'lacrei_db'),
+        'USER': os.getenv('DB_USER', 'mikael'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'chat'),
+        'HOST': os.getenv('DB_HOST', 'db'),  # 'db' no Docker, 'localhost' no GitHub Actions
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
