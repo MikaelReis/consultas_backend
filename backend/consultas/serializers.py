@@ -1,4 +1,5 @@
 from rest_framework import serializers
+import bleach
 from .models import Consulta
 
 class ConsultaSerializer(serializers.ModelSerializer):
@@ -10,9 +11,10 @@ class ConsultaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate_paciente(self, value):
-        if len(value) < 3:
+        cleaned_value = bleach.clean(value, strip=True)
+        if len(cleaned_value) < 3:
             raise serializers.ValidationError("O nome do paciente deve ter pelo menos 3 caracteres.")
-        return value
+        return cleaned_value
 
     def validate(self, data):
         if not data.get("data"):
@@ -20,3 +22,4 @@ class ConsultaSerializer(serializers.ModelSerializer):
         if not data.get("horario"):
             raise serializers.ValidationError({"horario": "O horário da consulta é obrigatório."})
         return data
+
