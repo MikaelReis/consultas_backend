@@ -12,3 +12,8 @@ class ProfissionalTests(APITestCase):
         self.assertEqual(Profissional.objects.count(),1)
         self.assertEqual(Profissional.objects.get().nome, "Dra. Joana")
 
+    def test_profissional_nome_invalido(self):
+        data = {"nome": "A", "especialidade": "Clínica Geral"}
+        response = self.client.post("/api/profissionais/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("nome", response.data)
