@@ -6,9 +6,10 @@ from .models import Consulta
 class ConsultaTests(APITestCase):
     def setUp(self):
         self.profissional = Profissional.objects.create(
-            nome="Dr. Marcos",
-            especialidade="Dermatologia",
-            email="marcos@exemplo.com"
+            nome_social="Dr. Marcos",
+            profissao="Dermatologia",
+            endereco="Rua A, 123",
+            contato="(11) 91234-5678"
         )
 
     def test_criar_consulta_valida(self):
@@ -53,5 +54,6 @@ class ConsultaTests(APITestCase):
         response = self.client.post("/api/consultas/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("O horário da consulta é obrigatório.", str(response.data))
+
 
 
