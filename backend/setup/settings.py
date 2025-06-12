@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'lacrei_db'),
         'USER': os.getenv('DB_USER', 'mikael'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'chat'),
-        'HOST': os.getenv('DB_HOST', 'db'),  # 'db' no Docker, 'localhost' no GitHub Actions
+        'HOST': os.getenv('DB_HOST', 'db'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
