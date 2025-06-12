@@ -20,16 +20,16 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="pg_isready -U mikael"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
     env:
       DB_NAME: lacrei_db
       DB_USER: mikael
       DB_PASSWORD: chat
-      DB_HOST: db
+      DB_HOST: localhost
       DB_PORT: 5432
       DEBUG: "True"
       SECRET_KEY: test
@@ -48,9 +48,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Aguardar banco de dados
+      - name: Esperar banco de dados subir
         run: |
-          until pg_isready -h $DB_HOST -p $DB_PORT; do echo "Aguardando banco de dados..."; sleep 1; done
+          echo "Aguardando banco subir..."
+          sleep 15
 
       - name: Rodar migrações
         run: python manage.py migrate
