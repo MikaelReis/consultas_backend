@@ -1,8 +1,10 @@
 name: Django CI
 
 on:
+  push:
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   test:
@@ -23,37 +25,35 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    steps:
-      - uses: actions/checkout@v3
+    env:
+      DB_NAME: lacrei_db
+      DB_USER: mikael
+      DB_PASSWORD: chat
+      DB_HOST: db
+      DB_PORT: 5432
+      DEBUG: "True"
+      SECRET_KEY: test
 
-      - name: Set up Python
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Wait for PostgreSQL
+      - name: Aguardar banco de dados
         run: |
-          until pg_isready -h localhost -p 5432; do echo "Aguardando banco de dados..."; sleep 1; done
+          until pg_isready -h $DB_HOST -p $DB_PORT; do echo "Aguardando banco de dados..."; sleep 1; done
 
-      - name: Run migrations
-        env:
-          DB_NAME: lacrei_db
-          DB_USER: mikael
-          DB_PASSWORD: chat
-          DB_HOST: localhost
-        run: |
-          python manage.py migrate
+      - name: Rodar migrações
+        run: python manage.py migrate
 
-      - name: Run tests
-        env:
-          DB_NAME: lacrei_db
-          DB_USER: mikael
-          DB_PASSWORD: chat
-          DB_HOST: localhost
-        run: |
-          python manage.py test
+      - name: Rodar testes
+        run: python manage.py test
