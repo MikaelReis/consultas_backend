@@ -158,3 +158,27 @@ GET /api/consultas/?profissional=3
         Containerização com Docker
 
         Deploy com Render
+
+❗ Melhorias Pendentes
+
+    Documentação visual via Swagger ou Redoc (pode ser adicionada via drf-spectacular).
+
+    Mock/integracão com sistema de pagamentos (AssAs) — opcional mas valorizado.
+
+    Pipeline de rollback no CI/CD (monitoramento e reverter deploy em caso de falhas).
+
+📝 Registro de Alterações
+
+    Model Profissional ajustada para incluir nome_social, contato e endereco.
+
+    Refatoração de validações nos serializers.
+
+    Atualização de workflows no GitHub Actions para conexão com DB.
+
+    Deploy Docker no Render.
+
+🔗 Links
+
+    Repositório: https://github.com/MikaelReis/consultas_backend
+
+    API: https://consultas-backend.onrender.com/api/
